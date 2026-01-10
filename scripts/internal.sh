@@ -6,6 +6,5 @@ npm run dev
 cd backend
 npm run dev
 
-
 git status --ignored
 # check which files are ignored
