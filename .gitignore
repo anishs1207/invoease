@@ -2,3 +2,5 @@ backend/.env
 backend/.vercel
 frontend/.env
 frontend/.vercel
+
+TODO.md
