@@ -52,4 +52,8 @@ jobs:
 
       - name: Start backend
         working-directory: backend
-        run: timeout 10s npm run dev
+        run: |
+          npm run dev &
+          BACKEND_PID=$!
+          sleep 5
+          kill $BACKEND_PID
