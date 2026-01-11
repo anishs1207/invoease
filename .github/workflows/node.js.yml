@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
@@ -47,4 +51,4 @@ jobs:
 
       - name: Start backend
         working-directory: backend
-        run: npm run dev
+        run: timeout 10s npm run dev
