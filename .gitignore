@@ -4,3 +4,6 @@ frontend/.env
 frontend/.vercel
 
 TODO.md
+
+tests/node_modules
+tests/unit/node_modules
