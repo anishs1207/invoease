@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
 import axios from "axios";
 import { Invoice } from "../../backend/src/models/invoice.model";
+import { User } from "../../backend/src/models/user.model";
 
+// for these test use of the supertets for it
+
+// real e2e => for api testing
 const BACKEND_INVOICE_URL = "http://localhost:3000/api/v1/invoice";
 
 //@@ add verify JWT stuff so that it makes sure the cookies are present here
@@ -9,7 +13,38 @@ const BACKEND_INVOICE_URL = "http://localhost:3000/api/v1/invoice";
 describe("Invoice Routes - /api/v1/invoice", () => {
   describe("/create-invoice - Used to Create an Invoice", () => {
     it("create-invoice-1: User Id is not passed", async () => {});
-    it("create-invoice-2: All Required fields not passed", async () => {});
+
+    it("create-invoice-2: All Required fields not passed", async () => {
+      const dummyUser: any = await User.create({
+        fullName: "Test User",
+        email: "testuser@example.com",
+        username: "testuser",
+        password: "password123",
+        role: "user",
+        isVerified: true,
+      });
+
+      const token = dummyUser.generateAccessToken();
+
+      console.log("token", token);
+
+      const response = await axios.post(
+        `${BACKEND_INVOICE_URL}/create-invoice`,
+        {
+          invoiceNumber: "INV-001",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      expect(response.status).toBe(200);
+      expect(response.data).toEqual({
+        message: "All Items Not Given",
+      });
+    });
     it("create-invoice-3: Validation of required fields failed", async () => {});
     it("create-invoice-4: Invoice with Invoice Number already exists for User", async () => {});
     it("create-invoice-5: Invoice Created Successfully", async () => {});

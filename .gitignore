@@ -7,3 +7,4 @@ TODO.md
 
 tests/node_modules
 tests/unit/node_modules
+tests/e2e/node_modules

@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.8",
     "vitest": "^4.0.17"
   },
   "dependencies": {
@@ -7,5 +9,6 @@
     "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.13.2",
     "jsonwebtoken": "^9.0.3"
-  }
+  },
+  "scripts": {}
 }

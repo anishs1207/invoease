@@ -32,9 +32,7 @@ describe("User Routes /api/v1/user", () => {
       // delete the user
     });
 
-    it("register-3: if user exists & is an Google OAuth User", async () => {
-      expect(true);
-    });
+    it("register-3: if user exists & is an Google OAuth User", async () => {});
 
     it("register-4: if user is an admin", async () => {});
 
