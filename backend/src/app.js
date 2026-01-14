@@ -4,34 +4,34 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 dotenv.config({
-    path: './.env'
+  path: "./.env",
 });
 
 const app = express();
 
-app.use(cors(
-    {
-        origin: process.env.CORS_ORIGIN,
-        credentials: true,
-    },
-));
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(cookieParser());
 
 import "./controllers/auth.controller.js";
 import userRouter from "./routes/user.route.js";
-import invoiceRouter from "./routes/invoice.router.js"
+import invoiceRouter from "./routes/invoice.router.js";
 import authRoutes from "./routes/auth.router.js";
-import adminRoutes from "./routes/admin.route.js"
+import adminRoutes from "./routes/admin.route.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
-app.use('/api/v1/user', userRouter);
-app.use('/api/v1/invoice', invoiceRouter);
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/admin', adminRoutes);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/invoice", invoiceRouter);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/admin", adminRoutes);
+app.use(errorHandler);
 
 export { app };
-
-

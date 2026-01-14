@@ -28,11 +28,14 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
   let role = "user";
 
-  if (
-    [fullName, email, username, password].some((field) => field?.trim() === "")
-  ) {
-    throw new ApiError(400, "All fields are required");
+  if (!fullName || !email || !username || !password) {
+    throw new ApiError({ statusCode: 400, message: "some fields are missing" });
   }
+
+  if ([fullName, email, username, password].some((field) => !field?.trim())) {
+    throw new ApiError({ statusCode: 400, message: "All fields are required" });
+  }
+
   const existingUser = await User.findOne({ $or: [{ username }, { email }] });
 
   if (existingUser) {
