@@ -2,54 +2,138 @@
 sidebar_position: 1
 ---
 
-# Manage Docs Versions
+# User API:
 
-Docusaurus can manage multiple versions of your docs.
+- Purpose: User API is used to manage authentication of the user
+- Route: http://localhost:3000/api/v1/user
 
-## Create a docs version
+## POST /register:
 
-Release a version 1.0 of your project:
+- Description: Used to register a new user
+- BASE URL: http://localhost:3000
+- END POINT: /api/v1/user
+
+Request Header:
+| Header | Value | Description |
+| ------------ | ---------------- | ---------------------- |
+| Content-Type | application/json | Specifies JSON payload |
+
+Request Body:
 
 ```bash
-npm run docusaurus docs:version 1.0
+{
+"fullName": "John Doe",
+"email": "john@example.com",
+"username": "johndoe",
+"password": "securePassword123"
+}
 ```
 
-The `docs` folder is copied into `versioned_docs/version-1.0` and `versions.json` is created.
+Response:
 
-Your docs now have 2 versions:
+```bash
+{
+"success": true,
+"message": "User registered successfully",
+"userId": "64d5f..."
+}
+```
 
-- `1.0` at `http://localhost:3000/docs/` for the version 1.0 docs
-- `current` at `http://localhost:3000/docs/next/` for the **upcoming, unreleased docs**
+Usage:
 
-## Add a Version Dropdown
+```js
+import axios from "axios";
 
-To navigate seamlessly across versions, add a version dropdown.
+const response = await axios.post(
+  "http://localhost:3000/api/v1/user/register",
+  { fullName: name, email, username, password },
+  { withCredentials: true }
+);
+```
 
-Modify the `docusaurus.config.js` file:
+## POST /login:
 
-```js title="docusaurus.config.js"
-export default {
-  themeConfig: {
-    navbar: {
-      items: [
-        // highlight-start
-        {
-          type: 'docsVersionDropdown',
-        },
-        // highlight-end
-      ],
+- Description: Used to register a new user
+- BASE URL: http://localhost:3000
+- END POINT: /api/v1/login
+
+Request Header:
+| Header | Value | Description |
+| ------------ | ---------------- | ---------------------- |
+| Content-Type | application/json | Specifies JSON payload |
+
+Request Body:
+
+```bash
+{
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+```
+
+<!--
+Successful Response (200 OK) -->
+
+<!-- ```bash
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "User Logged in Successfully",
+  "data": {
+    "user": {
+      "_id": "64d5f...",
+      "username": "johndoe",
+      "email": "john@example.com",
+      "fullName": "John Doe",
+      "createdAt": "2024-10-10T10:30:00.000Z",
+      "updatedAt": "2024-10-10T10:30:00.000Z"
     },
-  },
-};
-```
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+``` -->
+<!--
+Error Responses
+❌ Missing Email or Password (400)
+{
+"success": false,
+"message": "Email and Password are required"
+}
 
-The docs version dropdown appears in your navbar:
+❌ User Does Not Exist (409)
+{
+"success": false,
+"message": "User with Email does not Exist"
+}
 
-![Docs Version Dropdown](./img/docsVersionDropdown.png)
+❌ Email Not Verified (200)
 
-## Update an existing version
+A new verification code is automatically sent to the user's email.
 
-It is possible to edit versioned docs in their respective folder:
+{
+"success": false,
+"message": "Email not verified. A new verification code has been sent."
+}
 
-- `versioned_docs/version-1.0/hello.md` updates `http://localhost:3000/docs/hello`
-- `docs/hello.md` updates `http://localhost:3000/docs/next/hello`
+❌ Invalid Credentials (401)
+{
+"success": false,
+"message": "Invalid User Credentials"
+}
+
+Usage Example
+import axios from "axios";
+
+const response = await axios.post(
+"http://localhost:3000/api/v1/user/login",
+{
+email: "john@example.com",
+password: "securePassword123"
+},
+{
+withCredentials: true
+}
+);
+
+console.log(response.data);
+
+Notes -->
