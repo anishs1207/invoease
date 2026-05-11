@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import { sendVerificationEmail } from "../utils/emailService.js";
 
-const generateAccessAndRefreshTokens = async (userId) => {
+const   generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
     if (!user) throw new ApiError(404, "User Not Found");
